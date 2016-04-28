@@ -80,7 +80,7 @@ DATABASES = {
     'NAME': 'time_tracker',
     'USER': 'time_tracker',
     'PASSWORD': '000000',
-    'HOST': '', # Set to empty string for localhost.
+    'HOST': 'localhost', # Set to empty string for localhost.
     'PORT': '', # Set to empty string for default.
     }
 }
