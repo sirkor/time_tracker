@@ -1,4 +1,5 @@
 from django.shortcuts import render_to_response,redirect
 
+
 def index(request):
-    return render_to_response('login.html')
+    return render_to_response('main.html')

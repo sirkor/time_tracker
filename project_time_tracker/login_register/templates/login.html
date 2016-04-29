@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'main.html' %}
+
+{% block login %}
 <form action="/auth/login/" method="post">
     {% csrf_token %}
     <input type="text" name="username" id="username">
@@ -13,6 +9,6 @@
     <label>{{ login_error }}</label>
     {% endif %}
     <input type="submit" value="Войти">
+<label><a href="/">Вернуться на главную</a> </label>
 </form>
-</body>
-</html>
+{% endblock %}

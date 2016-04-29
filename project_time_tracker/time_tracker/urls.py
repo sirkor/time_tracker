@@ -8,6 +8,6 @@ urlpatterns = [
     # url(r'^$', 'project_time_tracker.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
-    url(r'', 'time_tracker.views.index'),
+    url(r'^$', 'time_tracker.views.index'),
 
 ]

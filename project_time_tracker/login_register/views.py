@@ -1,4 +1,4 @@
-from django.shortcuts import render_to_response, redirect, render
+from django.shortcuts import render_to_response, redirect, render, RequestContext
 from django.contrib import auth
 from django.core.context_processors import csrf
 from django.views.decorators.csrf import csrf_exempt
@@ -14,13 +14,15 @@ def login(request):
         user = auth.authenticate(username=username,password=password)
         if user is not None:
             auth.login(request,user)
-            return render_to_response('index.html')
+            return redirect('/')
         else:
             args['login_error'] = "Пользователь не найден"
             return render_to_response('login.html', args)
 
     else:
         render_to_response('login.html', args)
+
+    return render_to_response('login.html')
 
 
 def logout(request):

@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'login_register',
+    'time_tracker',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -56,7 +57,10 @@ ROOT_URLCONF = 'project_time_tracker.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(os.path.dirname(__file__), 'templates').replace('\\','/'),],
+        'DIRS': [
+            '/home/dima/environments/time_tracker/project_time_tracker/templates',
+            '/home/dima/environments/time_tracker/project_time_tracker/time_tracker/templates'
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
