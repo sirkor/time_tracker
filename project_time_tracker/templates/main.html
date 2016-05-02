@@ -5,19 +5,17 @@
     <title>Title</title>
 </head>
 <body>
-<right>
-    {% if username %}
-{{ username }}
-{%  else %}
-    Вы не авторизированы
-</right>
-{% endif %}
-{{ username }}
-{% if not username%}
+
+
+{% if a%}
+    <p>Приветствую, {{ a }}</p>
+{% else %}
     <p>Приветствую, авторизируйтесь на сайте</p>
     <label><a href="/auth/login/">Войти</a></label>
 {% endif %}
+<a href="/auth/register/"> Регистрация</a>
 
 {% block login %} {% endblock %}
+{% block register %} {% endblock %}
 </body>
 </html>

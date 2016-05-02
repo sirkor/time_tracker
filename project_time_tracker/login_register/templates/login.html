@@ -10,5 +10,6 @@
     {% endif %}
     <input type="submit" value="Войти">
 <label><a href="/">Вернуться на главную</a> </label>
+<p>{{ request.user.username }}</p>
 </form>
 {% endblock %}

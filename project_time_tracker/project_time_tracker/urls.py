@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^auth/', include(login_register.urls)),
     url(r'', include(time_tracker.urls)),
+    url(r'^users/', include(time_tracker.urls)),
 
 
 ]

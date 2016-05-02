@@ -1,7 +1,7 @@
 from django.conf.urls import include, url
 from django.contrib import admin
 import login_register
-
+from login_register import views
 
 urlpatterns = [
     # Examples:
@@ -10,4 +10,5 @@ urlpatterns = [
 
     url(r'^login/', 'login_register.views.login'),
     url(r'^logout/', 'login_register.views.logout'),
+    url(r'^register/$', views.RegisterFormView.as_view()),
 ]

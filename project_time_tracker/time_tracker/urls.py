@@ -9,5 +9,6 @@ urlpatterns = [
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^$', 'time_tracker.views.index'),
+    url(r'(?P<username>)/activities/all/', 'time_tracker.views.activities_list'),
 
 ]
