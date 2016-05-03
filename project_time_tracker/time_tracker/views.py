@@ -6,6 +6,6 @@ def index(request):
 
 
 def activities_list(request, username=''):
-    args = username
-    list_of_activities = Activities.objects.filter(activities_user=username)
-    return render_to_response('activities.html', list_of_activities)
+    duration = Activities.objects.filter(activities_user=username)
+
+    return render_to_response('activities.html', {'activities': Activities.objects.filter(activities_user=username)})

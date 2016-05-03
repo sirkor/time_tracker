@@ -5,7 +5,13 @@
     <title>Title</title>
 </head>
 <body>
-Ку
-{% for activities in  %}
+
+{% for activity in activities  %}
+<p>Название: {{ activity.activities_name }}</p>
+<p>Тип : {{ activity.activities_type }}</p>
+<p>Время начала: {{ activity.activities_start }}</p>
+<p>Время конца: {{ activity.activities_end }}</p>
+    <hr>
+{% endfor %}
 </body>
 </html>
