@@ -1,9 +1,9 @@
 {% extends 'activities.html' %}
 
 {% block add %}
-<form action="" method="post">
+<form action="/users/{{ user.username }}/activities/create/" method="post">
 {% csrf_token %}
-    {{ form }}
+    {{ form.as_p }}
     <input type="submit" value="add">
 </form>
 {% endblock %}
