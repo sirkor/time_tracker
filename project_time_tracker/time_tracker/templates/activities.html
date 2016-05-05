@@ -5,6 +5,8 @@
     <title>Title</title>
 </head>
 <body>
+<a href="/users/{{ request.user.username }}/activities/create/">Добавить</a>
+{% block add %}{% endblock %}
 
 {% for activity in activities  %}
 <p>Название: {{ activity.activities_name }}</p>

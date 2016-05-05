@@ -11,4 +11,5 @@ urlpatterns = [
     url(r'^login/', 'login_register.views.login'),
     url(r'^logout/', 'login_register.views.logout'),
     url(r'^register/$', views.RegisterFormView.as_view()),
+
 ]
