@@ -5,7 +5,10 @@
     <title>Title</title>
 </head>
 <body>
+<p align="left"> <a href="/">На главную</a>
 <a href="/users/{{ request.user.username }}/activities/create/">Добавить</a>
+<a href="/auth/logout/">Выйти</a>
+</p>
 {% block add %}{% endblock %}
 
 {% for activity in activities  %}

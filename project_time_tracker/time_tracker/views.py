@@ -7,7 +7,7 @@ from django.core.context_processors import csrf
 
 
 def index(request):
-    return render_to_response('main.html')
+    return render_to_response('main.html', context_instance=RequestContext(request))
 
 
 def activities_list(request, username=''):

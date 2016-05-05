@@ -7,8 +7,10 @@
 <body>
 
 
-{% if a %}
-    <p>Приветствую, {{ a }}</p>
+{% if user.is_authenticated %}
+
+    <p>Приветствую, {{ user.username }}</p>
+    <a href="/users/{{ user.username }}/activities/all/">Перейти на личную страницу</a>
 {% else %}
     <p>Приветствую, авторизируйтесь на сайте</p>
     <label><a href="/auth/login/">Войти</a></label>
