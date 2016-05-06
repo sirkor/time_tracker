@@ -11,7 +11,9 @@ urlpatterns = [
 
     url(r'^$', 'time_tracker.views.index'),
     url(r'(?P<username>\w+)/activities/all/', 'time_tracker.views.activities_list'),
-    url(r'(?P<username>\w+)/activities/create/',views.AddActivityFormView.as_view()),
+    #url(r'(?P<username>\w+)/activities/create/',views.AddActivityFormView.as_view()),
     url(r'thanks/','time_tracker.views.thanks_view'),
+    #url(r'(?P<username>\w+)/activities/create/','time_tracker.views.add_template'),
+    url(r'(?P<username>\w+)/activities/create/','time_tracker.views.add_activity_view'),
 
 ]
