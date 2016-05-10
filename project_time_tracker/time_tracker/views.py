@@ -2,10 +2,9 @@ from django.shortcuts import render_to_response,redirect, RequestContext
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.edit import FormView, CreateView
 from time_tracker.models import Activities
-from time_tracker.forms import AddActivityForm
 from django.core.context_processors import csrf
-from datetime import datetime
-
+import datetime
+from django.db import models
 
 def index(request):
     return render_to_response('main.html', context_instance=RequestContext(request))
@@ -25,32 +24,43 @@ def add_template(request, username=''):
     return render_to_response('add_activity.html', context_instance=RequestContext(request))
 
 
-'''class AddActivityFormView(CreateView):
-    template_name = 'add_activity.html'
-    form_class = AddActivityForm
-    success_url = '/users/thanks/'
-
-    def get_form_kwargs(self, step=None):
-        kwargs = super(AddActivityFormView, self).get_form_kwargs(step)
-        if step == '1':
-            kwargs.update({'request': self.request})
-        return kwargs
-
-    def form_valid(self, form):
-        return super(AddActivityFormView, self).form_valid(form)'''
-
-
 def add_activity_view(request, username=''):
     if request.POST:
         name = request.POST.get('activities_name','')
         my_type = request.POST.get('activities_type', '')
         start = request.POST.get('activities_start', '')
         end = request.POST.get('activities_end', '')
-        new_start = datetime.strptime(start, "%Y-%m-%d %H:%M")
-        new_end = datetime.strptime(end, "%Y-%m-%d %H:%M")
+        new_start = datetime.datetime.strptime(start, "%Y-%m-%d %H:%M")
+        new_end = datetime.datetime.strptime(end, "%Y-%m-%d %H:%M")
         duration = new_end - new_start
         new_post = Activities(activities_user=username,activities_name=name,activities_type=my_type,activities_start=start,
                               activities_end=end, activities_duration=duration)
         new_post.save()
         return redirect('/users/thanks')
     return render_to_response('add_activity.html', context_instance=RequestContext(request))
+
+
+def statistic_view(request, username=''):
+    #now = datetime.now()
+    statictic = Activities.objects.filter(activities_user=request.user.username)
+    summ_of_duration = datetime.timedelta(0)
+    for stat in statictic:
+        summ_of_duration += stat.activities_duration
+
+    statictic = Activities.objects.filter(activities_user=request.user.username, activities_type='Работа')
+    work_duration = datetime.timedelta(0)
+    for stat in statictic:
+        work_duration += stat.activities_duration
+
+    statictic = Activities.objects.filter(activities_user=request.user.username,activities_type='Остальное')
+    other_duration = datetime.timedelta(0)
+    for stat in statictic:
+        other_duration += stat.activities_duration
+
+    percent_of_work_duration = work_duration / summ_of_duration * 100
+    percent_of_other_duration = other_duration / summ_of_duration * 100
+    args = {'summ_duration': summ_of_duration, 'work_duration' : work_duration, 'other_duration' : other_duration,
+            'percent_of_work_duration' : round(percent_of_work_duration, 2),
+            'percent_of_other_duration' : round(percent_of_other_duration, 2)}
+
+    return render_to_response('statistic.html',args, context_instance=RequestContext(request))
