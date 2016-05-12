@@ -8,8 +8,8 @@
 <p align="left"> <a href="/">На главную</a>
 <a href="/user/{{ request.user.username }}/activities/all/">На домашнюю страницу</a>
 <a href="/users/{{ request.user.username }}/activities/create/">Добавить</a>
-<a href="/auth/logout/">Выйти</a>
 <a href="/users/{{ request.user.username }}/statistic/">Статистика</a>
+<a href="/auth/logout/">Выйти</a>
 </p>
 {% block add %}{% endblock %}
 
@@ -21,6 +21,7 @@
 <p>Длительность: {{ activity.activities_duration }}</p>
     <hr>
 {% endfor %}
+
 {% block thanks %}{% endblock %}
  {% block statistic %}{% endblock %}
 </body>
