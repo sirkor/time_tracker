@@ -57,10 +57,7 @@ ROOT_URLCONF = 'project_time_tracker.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-            '/home/dima/environments/time_tracker/project_time_tracker/templates',
-            '/home/dima/environments/time_tracker/project_time_tracker/time_tracker/templates'
-        ],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

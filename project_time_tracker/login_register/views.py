@@ -1,4 +1,3 @@
-import self as self
 from django.shortcuts import render_to_response, redirect, render, RequestContext, HttpResponse,HttpResponseRedirect
 from django.contrib import auth
 from django.core.context_processors import csrf
