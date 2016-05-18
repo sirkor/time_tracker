@@ -11,7 +11,7 @@ def index(request):
 
 def activities_list(request, username='' ):
     return render_to_response('activities.html',
-                              {'activities': Activities.objects.filter(activities_user=username)},
+                              {'activities': Activities.objects.filter(activities_user=username).order_by("-activities_start")},
                               context_instance=RequestContext(request))
 
 
