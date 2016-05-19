@@ -11,7 +11,7 @@ def index(request):
 
 def activities_list(request, username='' ):
     return render_to_response('activities.html',
-                              {'activities': Activities.objects.filter(activities_user=username).order_by("-activities_start")},
+                              {'activities': Activities.objects.filter(activities_user=username)},
                               context_instance=RequestContext(request))
 
 
@@ -34,7 +34,7 @@ def add_activity_view(request, username=''):
         duration = new_end - new_start
         new_post = Activities(activities_user=username, activities_name=name, activities_type=my_type,
                               activities_start=start, activities_end=end, activities_duration=duration,
-                              new=request.user)
+                              new=request.user, add_date=datetime.datetime.now())
         new_post.save()
         return redirect('/users/thanks')
     return render_to_response('add_activity.html', context_instance=RequestContext(request))
