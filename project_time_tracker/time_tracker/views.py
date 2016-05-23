@@ -1,12 +1,10 @@
 from django.shortcuts import render_to_response, redirect, RequestContext
 from time_tracker.models import Activities
 import datetime
-from django.core.paginator import Paginator
 
 
 def index(request):
-    return render_to_response('main.html',
-                              context_instance=RequestContext(request))
+    return render_to_response('main.html',context_instance=RequestContext(request))
 
 
 def activities_list(request, username='' ):
