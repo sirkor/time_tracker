@@ -1,4 +1,4 @@
-from django.shortcuts import render_to_response, redirect, render, RequestContext, HttpResponse,HttpResponseRedirect
+from django.shortcuts import render_to_response, redirect
 from django.contrib import auth
 from django.core.context_processors import csrf
 from django.views.generic.edit import FormView
@@ -23,12 +23,12 @@ def login(request):
 
         else:
             args['login_error'] = "Пользователь не найден"
-            return render_to_response('login.html',args)
+            return render_to_response('login.html', args)
 
     else:
         render_to_response('login.html', args)
 
-    return render_to_response('login.html',args)
+    return render_to_response('login.html', args)
 
 
 def logout(request):
