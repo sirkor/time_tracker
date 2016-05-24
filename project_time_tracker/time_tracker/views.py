@@ -2,6 +2,7 @@ from django.shortcuts import render_to_response, redirect, RequestContext
 from time_tracker.models import Activities
 import datetime
 from time_tracker.forms import ActivityAddForm
+from django.db.models import Sum, DurationField
 
 
 def index(request):
@@ -81,6 +82,28 @@ def statistic_view(request, username=''):
 
     return render_to_response('statistic.html', args,
                               context_instance=RequestContext(request))
+
+
+def statistic(request, username=''):
+    if request.user.username == username:
+        now = datetime.datetime.now()
+        now = now - datetime.timedelta(30)
+        all_duration = Activities.objects.filter(new=request.user,
+                                                 add_date=now).aggregate(sum=Sum('activities_duration'))
+
+        work_duration = Activities.objects.filter(new=request.user, add_date=now,
+                                                  activities_type="Работа").aggregate(sum=Sum('activities_duration'))
+
+        other_duration = Activities.objects.filter(new=request.user, add_date=now).\
+            exclude(activities_type="Работа").aggregate(Sum('activities_duration'))
+        percent_of_work_duration = work_duration['sum'] / all_duration['sum'] * 100
+        percent_of_other_duration = other_duration['duration'] / all_duration['duration'] *100
+        args = {'sum_duration': all_duration, 'work_duration': work_duration,
+                'other_duration': other_duration,
+                'percent_of_work_duration': round(percent_of_work_duration, 2),
+                'percent_of_other_duration': round(percent_of_other_duration, 2)}
+        return render_to_response('statistic.html', args, context_instance=RequestContext(request))
+    return render_to_response('statistic.html', context_instance=RequestContext(request))
 
 
 def add_activity(request, username=''):
