@@ -7,8 +7,7 @@ from django.db.models import Sum, DurationField
 
 def index(request):
     """Index page"""
-    return render_to_response('main.html',
-                              context_instance=RequestContext(request))
+    return render_to_response('main.html', context_instance=RequestContext(request))
 
 
 def activities_list(request, username=''):
@@ -23,7 +22,7 @@ def thanks_view(request):
 
 
 def statistic(request, username=''):
-    """View for statistic"""
+    """View for statistic """
     if request.user.username == username:
         now = datetime.datetime.now()
         new_now = datetime.datetime.now()
@@ -31,7 +30,7 @@ def statistic(request, username=''):
         cur_month = now.month
         start = now.replace(year=cur_year, month=cur_month, day=1)
         end = new_now.replace(year=cur_year, month=cur_month, day=30)
-        all_duration = Activities.objects.filter(new=request.user, activities_user=username).exclude(
+        all_duration = Activities.objects.filter(new=request.user).exclude(
             add_date__lte=start, add_date__gte=end).aggregate(sum=Sum('activities_duration',
                                                                       output_field=DurationField()))
 
@@ -42,7 +41,7 @@ def statistic(request, username=''):
         other_duration = Activities.objects.filter(new=request.user).exclude(activities_type="Работа",
                                                                              add_date__lte=start, add_date__gte=end).\
             aggregate(sum=Sum('activities_duration', output_field=DurationField()))
-        print(other_duration['sum'])
+
         percent_of_work_duration = work_duration['sum'] / all_duration['sum'] * 100
         percent_of_other_duration = other_duration['sum'] / all_duration['sum'] * 100
         args = {'sum_duration': all_duration['sum'], 'work_duration': work_duration['sum'],
@@ -50,9 +49,7 @@ def statistic(request, username=''):
                 'percent_of_work_duration': round(percent_of_work_duration, 2),
                 'percent_of_other_duration': round(percent_of_other_duration, 2)}
         return render_to_response('statistic.html', args, context_instance=RequestContext(request))
-    else:
-        args = {'sorry': 'Эта не ваша страница'}
-        return render_to_response('statistic.html', args, context_instance=RequestContext(request))
+
     return render_to_response('statistic.html', context_instance=RequestContext(request))
 
 
