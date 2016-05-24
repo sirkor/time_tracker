@@ -12,7 +12,7 @@ urlpatterns = [
     url(r'^$', 'time_tracker.views.index'),
     url(r'(?P<username>\w+)/activities/all/', 'time_tracker.views.activities_list'),
     url(r'thanks/','time_tracker.views.thanks_view'),
-    url(r'(?P<username>\w+)/activities/create/','time_tracker.views.add_activity_view'),
+    url(r'(?P<username>\w+)/activities/create/','time_tracker.views.add_activity'),
     url(r'(?P<username>\w+)/statistic/','time_tracker.views.statistic_view'),
     url(r'page/(\d+)/$', 'time_tracker.views.activities_list'),
 ]

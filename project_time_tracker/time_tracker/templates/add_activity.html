@@ -3,13 +3,8 @@
 {% block add %}
 <form action="/users/{{ user.username }}/activities/create/" method="post">
 {% csrf_token %}
-    Введите название: <input type="text" name="activities_name"><BR>
-    Выберите тип: <select name="activities_type" ><Br>
-        <option>Работа</option><Br>
-        <option>Остальное</option><Br>
-    </select><Br>
-    Введите дату и время начала(ГГГГ-ММ-ДД ЧЧ:ММ): <input type="datetime" name="activities_start"><BR>
-    Введите дату и время окончания(ГГГГ-ММ-ДД ЧЧ:ММ): <input type="datetime" name="activities_end"><BR>
+
+    {{ form.as_p }}
     <input type="submit" value="add">
 </form>
 {% endblock %}

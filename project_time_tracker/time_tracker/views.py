@@ -1,7 +1,7 @@
 from django.shortcuts import render_to_response, redirect, RequestContext
 from time_tracker.models import Activities
 import datetime
-
+from time_tracker.forms import ActivityAddForm
 
 
 def index(request):
@@ -81,3 +81,21 @@ def statistic_view(request, username=''):
 
     return render_to_response('statistic.html', args,
                               context_instance=RequestContext(request))
+
+
+def add_activity(request, username=''):
+    if request.POST:
+        form = ActivityAddForm(request.POST)
+        if form.is_valid():
+            activty = form.save(commit=False)
+            activty.new = request.user
+            activty.activities_user = username
+            activty.activities_duration = activty.activities_end - activty.activities_start
+            activty.add_date = datetime.datetime.now()
+            activty.save()
+            return redirect('/thanks/')
+    else:
+        form = ActivityAddForm()
+        args = {'form': form}
+    return render_to_response('add_activity.html', args, context_instance=RequestContext(request))
+
