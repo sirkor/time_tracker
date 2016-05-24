@@ -1,5 +1,7 @@
  {% extends 'activities.html' %}
-
+{% if args %}
+    {{ sorry }}
+{% endif %}
  {% block statistic %}
      <p> Общее время: {{ sum_duration }}</p>
      <p> Рабочая активность {{ work_duration }}</p>
