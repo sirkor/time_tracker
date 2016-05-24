@@ -3,11 +3,14 @@
 {% block login %}
 <form action="/auth/login/" method="post">
     {% csrf_token %}
-    <input type="text" name="username" id="username">
+    <!--<input type="text" name="username" id="username">
     <input type="password" name="password" id="password">
     {% if login_error %}
     <label>{{ login_error }}</label>
-    {% endif %}
+    {% endif %}<!-->
+
+      <!-- as_p для того, чтобы каждый элемент формы был с новой строки -->
+      {{ form.as_p }}
     <input type="submit" value="Войти">
 <label><a href="/">Вернуться на главную</a> </label>
 <p>{{ request.user.username }}</p>
