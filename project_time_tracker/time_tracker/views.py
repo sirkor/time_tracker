@@ -87,19 +87,20 @@ def statistic_view(request, username=''):
 def statistic(request, username=''):
     if request.user.username == username:
         now = datetime.datetime.now()
-        now = now - datetime.timedelta(30)
-        all_duration = Activities.objects.filter(new=request.user,
-                                                 add_date=now).aggregate(sum=Sum('activities_duration'))
+        now1 = now - datetime.timedelta(30)
+        all_duration = Activities.objects.filter(new=request.user, activities_user=username).\
+            aggregate(sum=Sum('activities_duration', output_field=DurationField()))
 
-        work_duration = Activities.objects.filter(new=request.user, add_date=now,
-                                                  activities_type="Работа").aggregate(sum=Sum('activities_duration'))
+        work_duration = Activities.objects.filter(new=request.user, activities_type="Работа").\
+            aggregate(sum=Sum('activities_duration', output_field=DurationField()))
 
-        other_duration = Activities.objects.filter(new=request.user, add_date=now).\
-            exclude(activities_type="Работа").aggregate(Sum('activities_duration'))
+        other_duration = Activities.objects.filter(new=request.user).\
+            exclude(activities_type="Работа").aggregate(sum=Sum('activities_duration', output_field=DurationField()))
+
         percent_of_work_duration = work_duration['sum'] / all_duration['sum'] * 100
-        percent_of_other_duration = other_duration['duration'] / all_duration['duration'] *100
-        args = {'sum_duration': all_duration, 'work_duration': work_duration,
-                'other_duration': other_duration,
+        percent_of_other_duration = other_duration['sum'] / all_duration['sum'] *100
+        args = {'sum_duration': all_duration['sum'], 'work_duration': work_duration['sum'],
+                'other_duration': other_duration['sum'],
                 'percent_of_work_duration': round(percent_of_work_duration, 2),
                 'percent_of_other_duration': round(percent_of_other_duration, 2)}
         return render_to_response('statistic.html', args, context_instance=RequestContext(request))
@@ -110,12 +111,12 @@ def add_activity(request, username=''):
     if request.POST:
         form = ActivityAddForm(request.POST)
         if form.is_valid():
-            activty = form.save(commit=False)
-            activty.new = request.user
-            activty.activities_user = username
-            activty.activities_duration = activty.activities_end - activty.activities_start
-            activty.add_date = datetime.datetime.now()
-            activty.save()
+            activity = form.save(commit=False)
+            activity.new = request.user
+            activity.activities_user = username
+            activity.activities_duration = activity.activities_end - activity.activities_start
+            activity.add_date = datetime.datetime.now()
+            activity.save()
             return redirect('/thanks/')
     else:
         form = ActivityAddForm()
