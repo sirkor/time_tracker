@@ -38,8 +38,8 @@ def statistic(request, username=''):
             add_date__lte=start, add_date__gte=end).aggregate(sum=Sum('activities_duration',
                                                                       output_field=DurationField()))
 
-        other_duration = Activities.objects.filter(new=request.user).exclude(activities_type="Работа",
-                                                                             add_date__lte=start, add_date__gte=end).\
+        other_duration = Activities.objects.filter(new=request.user).exclude(activities_type="Работа").exclude(
+            add_date__lte=start, add_date__gte=end).\
             aggregate(sum=Sum('activities_duration', output_field=DurationField()))
 
         percent_of_work_duration = work_duration['sum'] / all_duration['sum'] * 100
