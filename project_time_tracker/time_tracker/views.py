@@ -26,18 +26,25 @@ def statistic(request, username=''):
     """View for statistic"""
     if request.user.username == username:
         now = datetime.datetime.now()
-        now1 = now - datetime.timedelta(30)
-        all_duration = Activities.objects.filter(new=request.user, activities_user=username).\
+        new_now = datetime.datetime.now()
+        cur_year = now.year
+        cur_month = now.month
+        start = now.replace(year=cur_year, month=cur_month, day=1)
+        end = new_now.replace(year=cur_year, month=cur_month, day=30)
+        all_duration = Activities.objects.filter(new=request.user, activities_user=username).exclude(
+            add_date__lte=start, add_date__gte=end).aggregate(sum=Sum('activities_duration',
+                                                                      output_field=DurationField()))
+
+        work_duration = Activities.objects.filter(new=request.user, activities_type="Работа").exclude(
+            add_date__lte=start, add_date__gte=end).aggregate(sum=Sum('activities_duration',
+                                                                      output_field=DurationField()))
+
+        other_duration = Activities.objects.filter(new=request.user).exclude(activities_type="Работа",
+                                                                             add_date__lte=start, add_date__gte=end).\
             aggregate(sum=Sum('activities_duration', output_field=DurationField()))
-
-        work_duration = Activities.objects.filter(new=request.user, activities_type="Работа").\
-            aggregate(sum=Sum('activities_duration', output_field=DurationField()))
-
-        other_duration = Activities.objects.filter(new=request.user).\
-            exclude(activities_type="Работа").aggregate(sum=Sum('activities_duration', output_field=DurationField()))
-
+        print(other_duration['sum'])
         percent_of_work_duration = work_duration['sum'] / all_duration['sum'] * 100
-        percent_of_other_duration = other_duration['sum'] / all_duration['sum'] *100
+        percent_of_other_duration = other_duration['sum'] / all_duration['sum'] * 100
         args = {'sum_duration': all_duration['sum'], 'work_duration': work_duration['sum'],
                 'other_duration': other_duration['sum'],
                 'percent_of_work_duration': round(percent_of_work_duration, 2),
