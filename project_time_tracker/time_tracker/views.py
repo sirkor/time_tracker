@@ -56,14 +56,9 @@ def statistic(request, username=''):
 def add_activity(request, username=''):
     """view for form ActivityAddForm"""
     if request.POST:
-        form = ActivityAddForm(request.POST)
+        form = ActivityAddForm(request.POST, request=request, new=request.user, activities_user=username)
         if form.is_valid():
-            activity = form.save(commit=False)
-            activity.new = request.user
-            activity.activities_user = username
-            activity.activities_duration = activity.activities_end - activity.activities_start
-            activity.add_date = datetime.datetime.now()
-            activity.save()
+            form.save()
             return redirect('/thanks/')
     else:
         form = ActivityAddForm()
