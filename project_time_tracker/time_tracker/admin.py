@@ -29,8 +29,7 @@ class UserActivitiesInline(admin.StackedInline):
             format(reverse('admin:time_tracker_activities_change', args=(obj.pk,)), obj.activities_name)
 
     activity_link.allow_tags = True
-    activity_link.short_description = Activities._meta.\
-        get_field('activities_name').verbose_name.title()
+    activity_link.short_description = Activities._meta.get_field('activities_name').verbose_name.title()
     activity_link.admin_order_field = 'activities_name'
 
 

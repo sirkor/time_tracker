@@ -39,8 +39,8 @@ def statistic(request, username=''):
                                                                       output_field=DurationField()))
 
         other_duration = Activities.objects.filter(new=request.user).exclude(activities_type="Работа").exclude(
-            add_date__lte=start, add_date__gte=end).\
-            aggregate(sum=Sum('activities_duration', output_field=DurationField()))
+            add_date__lte=start, add_date__gte=end).aggregate(sum=Sum('activities_duration',
+                                                                      output_field=DurationField()))
         if all_duration['sum'] is None:
             all_duration['sum'] = datetime.timedelta(0)
             args = {'sorry': 'На данный момент вы не добавили ни одной активности'}
