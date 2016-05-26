@@ -15,7 +15,7 @@ class ActivityAddForm(forms.ModelForm):
         instance.new = self.new
         instance.activities_user = self.activities_user
         instance.activities_duration = datetime.timedelta()
-        instance.activities_duration = self.fields['activities_end'] - self.fields['activities_start']
+        instance.activities_duration = self.cleaned_data['activities_end'] - self.cleaned_data['activities_start']
         instance.add_date = datetime.datetime.now()
         if commit:
             instance.save()

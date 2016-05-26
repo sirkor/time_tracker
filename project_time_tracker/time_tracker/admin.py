@@ -26,9 +26,7 @@ class UserActivitiesInline(admin.StackedInline):
 
     def activity_link(self, obj):
         return u'<a href="{0}">{1}</a>'.\
-            format(reverse('admin:time_tracker_activities_change',
-                           args=(obj.pk,)),
-                   obj.activities_name)
+            format(reverse('admin:time_tracker_activities_change', args=(obj.pk,)), obj.activities_name)
 
     activity_link.allow_tags = True
     activity_link.short_description = Activities._meta.\
