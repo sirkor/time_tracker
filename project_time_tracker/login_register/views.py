@@ -31,4 +31,3 @@ class LoginFormView(FormView):
         self.user = form.get_user()
         auth.login(self.request, self.user)
         return super(LoginFormView, self).form_valid(form)
-
