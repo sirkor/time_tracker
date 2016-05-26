@@ -15,7 +15,6 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
@@ -26,7 +25,6 @@ SECRET_KEY = '(5np*a$&$mijbh4l@=i*l!^@t)hhtsn+z0svh7e8uqdkp-096p'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -73,22 +71,19 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'project_time_tracker.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
 DATABASES = {
     'default': {
-    'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    'NAME': 'time_tracker',
-    'USER': 'time_tracker',
-    'PASSWORD': '000000',
-    'HOST': 'localhost', # Set to empty string for localhost.
-    'PORT': '', # Set to empty string for default.
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'time_tracker',
+        'USER': 'time_tracker',
+        'PASSWORD': '000000',
+        'HOST': 'localhost',  # Set to empty string for localhost.
+        'PORT': '',  # Set to empty string for default.
     }
 }
-
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
@@ -101,7 +96,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/

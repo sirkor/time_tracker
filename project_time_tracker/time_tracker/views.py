@@ -52,9 +52,9 @@ def statistic(request, username=''):
             percent_of_work_duration = work_duration['sum'] / all_duration['sum'] * 100
             percent_of_other_duration = other_duration['sum'] / all_duration['sum'] * 100
             args = {'sum_duration': all_duration['sum'], 'work_duration': work_duration['sum'],
-                'other_duration': other_duration['sum'],
-                'percent_of_work_duration': round(percent_of_work_duration, 2),
-                'percent_of_other_duration': round(percent_of_other_duration, 2)}
+                    'other_duration': other_duration['sum'],
+                    'percent_of_work_duration': round(percent_of_work_duration, 2),
+                    'percent_of_other_duration': round(percent_of_other_duration, 2)}
         return render_to_response('statistic.html', args, context_instance=RequestContext(request))
 
     return render_to_response('statistic.html', context_instance=RequestContext(request))
@@ -70,5 +70,3 @@ def add_activity(request, username=''):
     else:
         form = ActivityAddForm()
     return render_to_response('add_activity.html', {'form': form}, context_instance=RequestContext(request))
-
-

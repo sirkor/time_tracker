@@ -24,5 +24,3 @@ class ActivityAddForm(forms.ModelForm):
     class Meta:
         model = Activities
         fields = ('activities_name', 'activities_type', 'activities_start', 'activities_end')
-
-
